@@ -7,8 +7,9 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/_fwAndami"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/libIverUtiles"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/extCAD"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/libCq CMS for java"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/libDriverManager"/>
 	<classpathentry kind="src" path="/libGDBMS"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/libProjection"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/libExceptions"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

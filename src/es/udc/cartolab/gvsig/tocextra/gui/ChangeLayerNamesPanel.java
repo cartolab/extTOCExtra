@@ -21,7 +21,7 @@ import com.iver.andami.ui.mdiManager.WindowInfo;
 import com.iver.cit.gvsig.fmap.layers.FLayer;
 
 public class ChangeLayerNamesPanel extends JPanel implements IWindow, ActionListener {
-	
+
 	private FLayer[] layers = null;
 	private JPanel southPanel = null;
 	private JPanel centerPanel = null;
@@ -31,7 +31,7 @@ public class ChangeLayerNamesPanel extends JPanel implements IWindow, ActionList
 	private JTable table;
 
 	public WindowInfo getWindowInfo() {
-		
+
 		if (viewInfo == null) {
 			viewInfo = new WindowInfo(WindowInfo.MODELESSDIALOG | WindowInfo.PALETTE);
 			viewInfo.setTitle(PluginServices.getText(this, "Change_Names_window"));
@@ -51,55 +51,55 @@ public class ChangeLayerNamesPanel extends JPanel implements IWindow, ActionList
 			}
 		}
 		return viewInfo;
-		
+
 	}
-	
+
 	public ChangeLayerNamesPanel(FLayer[] layers) {
 		this.layers =layers;
 		init();
 	}
-	
+
 	private void init() {
-		
+
 		GridBagLayout layout = new GridBagLayout();
 		setLayout(layout);
-		
-		add(getCenterPanel(), new GridBagConstraints(0, 0, 1, 1, 1, 1, 
+
+		add(getCenterPanel(), new GridBagConstraints(0, 0, 1, 1, 1, 1,
 				GridBagConstraints.NORTH, GridBagConstraints.BOTH,
 				new Insets(0, 0, 0, 0), 0, 0));
-		
-		add(getSouthPanel(), new GridBagConstraints(0, 25, 1, 1, 0, 0, 
+
+		add(getSouthPanel(), new GridBagConstraints(0, 25, 1, 1, 0, 0,
 				GridBagConstraints.SOUTH, GridBagConstraints.BOTH,
 				new Insets(0, 0, 0, 0), 0, 0));
-		
+
 	}
-	
+
 	private JPanel getCenterPanel() {
-		
+
 		if (centerPanel == null) {
 			centerPanel = new JPanel();
-			
+
 			GridBagLayout glayout = new GridBagLayout();
-			GridBagConstraints c = new GridBagConstraints();		
+			GridBagConstraints c = new GridBagConstraints();
 
 			c.weightx = 1.0;
-			c.weighty = 1.0;				
+			c.weighty = 1.0;
 			c.fill = GridBagConstraints.BOTH;
 			centerPanel.setLayout(glayout);
-			
+
 			MyTableModel model = new MyTableModel();
 			table = new JTable(model);
-			
-			this.cellRenderer = new AttribTableCellRenderer();
-			
-			model.addColumn(PluginServices.getText(this, "headerTableOldValue"));
-			model.addColumn(PluginServices.getText(this, "headerTableNewValue"));		
 
-			TableColumn attribColumn = table.getColumn(PluginServices.getText(this,"headerTableOldValue"));		
+			this.cellRenderer = new AttribTableCellRenderer();
+
+			model.addColumn(PluginServices.getText(this, "headerTableOldValue"));
+			model.addColumn(PluginServices.getText(this, "headerTableNewValue"));
+
+			TableColumn attribColumn = table.getColumn(PluginServices.getText(this,"headerTableOldValue"));
 			attribColumn.setCellRenderer(this.cellRenderer);
 			attribColumn = table.getColumn(PluginServices.getText(this,"headerTableNewValue"));
 			attribColumn.setCellRenderer(this.cellRenderer);
-			
+
 			for (int i=layers.length-1; i>=0; i--) {
 				Vector aux = new Vector();
 				String layerName = layers[i].getName();
@@ -108,14 +108,14 @@ public class ChangeLayerNamesPanel extends JPanel implements IWindow, ActionList
 				model.addRow(aux);
 				model.fireTableRowsInserted(model.getRowCount()-1, model.getRowCount()-1);
 			}
-			
+
 			JScrollPane scrollPane = new JScrollPane(table);
 			centerPanel.add(scrollPane, c);
-			
+
 		}
 		return centerPanel;
 	}
-	
+
 	protected JPanel getSouthPanel() {
 
 		if (southPanel == null) {
@@ -141,8 +141,8 @@ public class ChangeLayerNamesPanel extends JPanel implements IWindow, ActionList
 		if (e.getSource() == okButton) {
 			if (table.isEditing()) {
 				if (table.getCellEditor() != null) {
-			        table.getCellEditor().stopCellEditing();
-			    }
+					table.getCellEditor().stopCellEditing();
+				}
 			}
 			TableModel model = table.getModel();
 			for (int i=0; i<model.getRowCount(); i++) {
@@ -152,9 +152,14 @@ public class ChangeLayerNamesPanel extends JPanel implements IWindow, ActionList
 					layers[layers.length - i - 1].setName(text);
 				}
 			}
-			
+
 			PluginServices.getMDIManager().closeWindow(this);
 		}
+	}
+
+	public Object getWindowProfile() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

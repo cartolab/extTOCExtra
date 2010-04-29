@@ -12,9 +12,10 @@ import com.iver.cit.gvsig.project.documents.view.toc.ITocItem;
 import com.iver.cit.gvsig.project.documents.view.toc.actions.StartEditingTocMenuEntry;
 
 public class StartEdition2TocMenuEntry extends StartEditingTocMenuEntry {
-	
+
+	@Override
 	public boolean isVisible(ITocItem item, FLayer[] selectedItems) {
-		
+
 		boolean visible = false;
 		if (isTocItemBranch(item)) {
 			IWindow window=PluginServices.getMDIManager().getActiveWindow();
@@ -27,25 +28,26 @@ public class StartEdition2TocMenuEntry extends StartEditingTocMenuEntry {
 					}
 				}
 
-			} 
+			}
 		}
 		return visible;
 	}
 
+	@Override
 	public void execute(ITocItem item, FLayer[] selectedItems) {
-		
+
 		CADExtension.initFocus();
 		View view = (View) PluginServices.getMDIManager().getActiveWindow();
-		
+
 		MapControl mapControl = view.getMapControl();
-		
-		mapControl.getMapContext().clearAllCachingImageDrawnLayers();
+
+		//mapControl.getMapContext().clearAllCachingImageDrawnLayers();
 		view.showConsole();
 		EditionManager editionManager=CADExtension.getEditionManager();
 		editionManager.setMapControl(mapControl);
-		
+
 		ToggleEditing te = new ToggleEditing();
-		
+
 		for (int i=0; i<selectedItems.length; i++) {
 			if (selectedItems[i] instanceof FLyrVect) {
 				FLyrVect lv = (FLyrVect) selectedItems[i];
@@ -53,5 +55,5 @@ public class StartEdition2TocMenuEntry extends StartEditingTocMenuEntry {
 			}
 		}
 	}
-	
+
 }
