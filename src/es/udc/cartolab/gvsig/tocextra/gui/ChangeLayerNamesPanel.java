@@ -14,7 +14,7 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package es.udc.cartolab.gvsig.tocextra.gui;
 
@@ -38,7 +38,8 @@ import com.iver.andami.ui.mdiManager.IWindow;
 import com.iver.andami.ui.mdiManager.WindowInfo;
 import com.iver.cit.gvsig.fmap.layers.FLayer;
 
-public class ChangeLayerNamesPanel extends JPanel implements IWindow, ActionListener {
+public class ChangeLayerNamesPanel extends JPanel implements IWindow,
+		ActionListener {
 
 	private FLayer[] layers = null;
 	private JPanel southPanel = null;
@@ -51,10 +52,12 @@ public class ChangeLayerNamesPanel extends JPanel implements IWindow, ActionList
 	public WindowInfo getWindowInfo() {
 
 		if (viewInfo == null) {
-			viewInfo = new WindowInfo(WindowInfo.MODELESSDIALOG | WindowInfo.PALETTE);
-			viewInfo.setTitle(PluginServices.getText(this, "Change_Names_window"));
+			viewInfo = new WindowInfo(WindowInfo.MODELESSDIALOG
+					| WindowInfo.PALETTE);
+			viewInfo.setTitle(PluginServices.getText(this,
+					"Change_Names_window"));
 			viewInfo.setWidth(425);
-			if (layers!=null) {
+			if (layers != null) {
 				if (layers.length < 4) {
 					viewInfo.setHeight(75);
 				} else if (layers.length < 7) {
@@ -73,7 +76,7 @@ public class ChangeLayerNamesPanel extends JPanel implements IWindow, ActionList
 	}
 
 	public ChangeLayerNamesPanel(FLayer[] layers) {
-		this.layers =layers;
+		this.layers = layers;
 		init();
 	}
 
@@ -83,12 +86,12 @@ public class ChangeLayerNamesPanel extends JPanel implements IWindow, ActionList
 		setLayout(layout);
 
 		add(getCenterPanel(), new GridBagConstraints(0, 0, 1, 1, 1, 1,
-				GridBagConstraints.NORTH, GridBagConstraints.BOTH,
-				new Insets(0, 0, 0, 0), 0, 0));
+				GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(
+						0, 0, 0, 0), 0, 0));
 
 		add(getSouthPanel(), new GridBagConstraints(0, 25, 1, 1, 0, 0,
-				GridBagConstraints.SOUTH, GridBagConstraints.BOTH,
-				new Insets(0, 0, 0, 0), 0, 0));
+				GridBagConstraints.SOUTH, GridBagConstraints.BOTH, new Insets(
+						0, 0, 0, 0), 0, 0));
 
 	}
 
@@ -126,18 +129,21 @@ public class ChangeLayerNamesPanel extends JPanel implements IWindow, ActionList
 			model.addColumn(PluginServices.getText(this, "headerTableOldValue"));
 			model.addColumn(PluginServices.getText(this, "headerTableNewValue"));
 
-			TableColumn attribColumn = table.getColumn(PluginServices.getText(this,"headerTableOldValue"));
+			TableColumn attribColumn = table.getColumn(PluginServices.getText(
+					this, "headerTableOldValue"));
 			attribColumn.setCellRenderer(this.cellRenderer);
-			attribColumn = table.getColumn(PluginServices.getText(this,"headerTableNewValue"));
+			attribColumn = table.getColumn(PluginServices.getText(this,
+					"headerTableNewValue"));
 			attribColumn.setCellRenderer(this.cellRenderer);
 
-			for (int i=layers.length-1; i>=0; i--) {
+			for (int i = layers.length - 1; i >= 0; i--) {
 				Vector aux = new Vector();
 				String layerName = layers[i].getName();
 				aux.add(layerName);
 				aux.add(layerName);
 				model.addRow(aux);
-				model.fireTableRowsInserted(model.getRowCount()-1, model.getRowCount()-1);
+				model.fireTableRowsInserted(model.getRowCount() - 1,
+						model.getRowCount() - 1);
 			}
 
 			JScrollPane scrollPane = new JScrollPane(table);
@@ -179,9 +185,10 @@ public class ChangeLayerNamesPanel extends JPanel implements IWindow, ActionList
 				}
 			}
 			TableModel model = table.getModel();
-			for (int i=0; i<model.getRowCount(); i++) {
+			for (int i = 0; i < model.getRowCount(); i++) {
 				String text = (String) model.getValueAt(i, 1);
-				String currentLayerName = layers[layers.length - i - 1].getName();
+				String currentLayerName = layers[layers.length - i - 1]
+						.getName();
 				if (text.compareTo(currentLayerName) != 0) {
 					layers[layers.length - i - 1].setName(text);
 				}

@@ -14,7 +14,7 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package es.udc.cartolab.gvsig.tocextra.gui;
 
@@ -28,35 +28,36 @@ import javax.swing.JTextArea;
 import javax.swing.table.TableCellRenderer;
 
 /**
- * With this class, the navTable first column text is forced to
- * be bold.
- *  
+ * With this class, the navTable first column text is forced to be bold.
+ * 
  * @author Pablo Sanxiao, Nacho Uve
- *
+ * 
  */
-public class AttribTableCellRenderer extends JTextArea implements TableCellRenderer {
+public class AttribTableCellRenderer extends JTextArea implements
+		TableCellRenderer {
 
 	private static final long serialVersionUID = 1L;
 
 	private Vector noEditableRows = new Vector();
-	
-	public void addNoEditableRow(int rowNumber){
+
+	public void addNoEditableRow(int rowNumber) {
 		noEditableRows.addElement(new Integer(rowNumber));
 	}
-	
-	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-		
-		this.setText((String)value.toString());		
-		if (column == 0){
+
+	public Component getTableCellRendererComponent(JTable table, Object value,
+			boolean isSelected, boolean hasFocus, int row, int column) {
+
+		this.setText(value.toString());
+		if (column == 0) {
 			Font f = new Font("Sans", Font.BOLD, 12);
 			this.setFont(f);
 		} else {
 			Font f = new Font("Sans", Font.PLAIN, 12);
 			this.setFont(f);
 		}
-				
-		if (noEditableRows.contains(new Integer(row))){
-			if (column == 0){ 
+
+		if (noEditableRows.contains(new Integer(row))) {
+			if (column == 0) {
 				this.setBackground(new Color(230, 200, 200));
 			} else {
 				this.setBackground(new Color(240, 230, 230));
@@ -68,13 +69,13 @@ public class AttribTableCellRenderer extends JTextArea implements TableCellRende
 				this.setBackground(Color.white);
 			}
 		}
-		
-		if (isSelected){
+
+		if (isSelected) {
 			this.setBackground(new Color(195, 212, 232));
-			if (noEditableRows.contains(new Integer(row))){
+			if (noEditableRows.contains(new Integer(row))) {
 				this.setBackground(new Color(220, 170, 200));
 			}
-		}		
+		}
 		return this;
-	}	
+	}
 }
