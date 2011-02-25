@@ -106,7 +106,20 @@ public class ChangeLayerNamesPanel extends JPanel implements IWindow, ActionList
 			centerPanel.setLayout(glayout);
 
 			MyTableModel model = new MyTableModel();
-			table = new JTable(model);
+			table = new JTable(model) {
+
+				public void changeSelection(final int row, final int column,
+						boolean toggle, boolean extend) {
+					if (column == 0) {
+						changeSelection(row, column + 1, toggle, extend);
+					} else {
+						super.changeSelection(row, column, toggle, extend);
+						table.editCellAt(row, column);
+						table.transferFocus();
+					}
+				}
+
+			};
 
 			this.cellRenderer = new AttribTableCellRenderer();
 
@@ -129,6 +142,9 @@ public class ChangeLayerNamesPanel extends JPanel implements IWindow, ActionList
 
 			JScrollPane scrollPane = new JScrollPane(table);
 			centerPanel.add(scrollPane, c);
+
+			// table.setColumnSelectionAllowed(true);
+			table.setRowSelectionAllowed(true);
 
 		}
 		return centerPanel;
