@@ -14,7 +14,7 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package es.udc.cartolab.gvsig.tocextra;
 
@@ -25,24 +25,45 @@ import com.iver.cit.gvsig.project.documents.view.gui.View;
 import com.iver.cit.gvsig.project.documents.view.toc.AbstractTocContextMenuAction;
 import com.iver.cit.gvsig.project.documents.view.toc.ITocItem;
 
+/**
+ * TOC menu entry to invert selection of the layers in view.
+ * 
+ * @author Javier Estévez <valdaris at gmail dot com>
+ * 
+ */
 public class InvertSelectionTocMenuEntry extends AbstractTocContextMenuAction {
 
+	/**
+	 * Method that will be executed when user clicks on this TOC menu entry.
+	 * 
+	 * @param item
+	 *            TOC item clicked.
+	 * @param selectedItems
+	 *            Array of layers selected in TOC.
+	 */
 	public void execute(ITocItem item, FLayer[] selectedItems) {
 		View view = (View) PluginServices.getMDIManager().getActiveWindow();
-		
+
 		selectAllLayers(view.getMapControl().getMapContext().getLayers());
-		
-		for (int i=0; i<selectedItems.length; i++) {
+
+		for (int i = 0; i < selectedItems.length; i++) {
 			if (!(selectedItems[i] instanceof FLayers)) {
 				selectedItems[i].setActive(false);
 			}
 		}
 	}
-	
+
+	/**
+	 * Recursive method to select all layers of a group, that avoids groups
+	 * selection.
+	 * 
+	 * @param layers
+	 *            layers to select group
+	 */
 	public static void selectAllLayers(FLayers layers) {
-		
+
 		int nLayers = layers.getLayersCount();
-		for (int i=0; i<nLayers; i++) {
+		for (int i = 0; i < nLayers; i++) {
 			FLayer layer = layers.getLayer(i);
 			if (layer instanceof FLayers) {
 				layer.setActive(false);
@@ -51,16 +72,16 @@ public class InvertSelectionTocMenuEntry extends AbstractTocContextMenuAction {
 				layer.setActive(true);
 			}
 		}
-		
+
 	}
 
 	public String getText() {
 		return PluginServices.getText(this, "Invert_selection");
-		//return "Invertir selección";
+		// return "Invertir selección";
 	}
-	
+
 	public String getGroup() {
-		return "tocextra"; //FIXME
+		return "tocextra"; // FIXME
 	}
 
 	public int getGroupOrder() {
@@ -71,10 +92,20 @@ public class InvertSelectionTocMenuEntry extends AbstractTocContextMenuAction {
 		return 1;
 	}
 
+	/**
+	 * Method to enable or disable this menu entry.
+	 * 
+	 * @return true if the menu entry should be enabled, false otherwise.
+	 */
 	public boolean isEnabled(ITocItem item, FLayer[] selectedItems) {
 		return true;
 	}
 
+	/**
+	 * Method to this menu entry visibility
+	 * 
+	 * @return true if the menu entry should be visible, false otherwise.
+	 */
 	public boolean isVisible(ITocItem item, FLayer[] selectedItems) {
 		if (isTocItemBranch(item) && selectedItems != null) {
 			return true;

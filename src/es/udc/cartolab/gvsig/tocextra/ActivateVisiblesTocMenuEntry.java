@@ -14,7 +14,7 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package es.udc.cartolab.gvsig.tocextra;
 
@@ -25,28 +25,42 @@ import com.iver.cit.gvsig.project.documents.view.gui.View;
 import com.iver.cit.gvsig.project.documents.view.toc.AbstractTocContextMenuAction;
 import com.iver.cit.gvsig.project.documents.view.toc.ITocItem;
 
-public class ActivateVisiblesTocMenuEntry extends AbstractTocContextMenuAction{
+/**
+ * TOC menu entry to activate all visible layers in view.
+ * 
+ * @author Javier Estévez <valdaris at gmail dot com>
+ * 
+ */
+public class ActivateVisiblesTocMenuEntry extends AbstractTocContextMenuAction {
 
 	public String getText() {
 		return PluginServices.getText(this, "Activate_visible");
 	}
-	
+
+	/**
+	 * Method that will be executed when user clicks on this TOC menu entry.
+	 * 
+	 * @param item
+	 *            TOC item clicked.
+	 * @param selectedItems
+	 *            Array of layers selected in TOC.
+	 */
 	public void execute(ITocItem item, FLayer[] selectedItems) {
-		
+
 		View view = (View) PluginServices.getMDIManager().getActiveWindow();
 		view.getMapControl().getMapContext().getLayers().setAllActives(false);
 		FLayers layers = view.getMapControl().getMapContext().getLayers();
-				
+
 		activateVisibles(layers);
-		
+
 	}
-	
+
 	private void activateVisibles(FLayers layers) {
 
-		for (int i=0; i<layers.getLayersCount(); i++) {
+		for (int i = 0; i < layers.getLayersCount(); i++) {
 			FLayer layer = layers.getLayer(i);
 			if (layer instanceof FLayers) {
-				activateVisibles((FLayers)layer);
+				activateVisibles((FLayers) layer);
 			} else {
 				if (layer.isVisible()) {
 					layer.setActive(true);
@@ -55,9 +69,9 @@ public class ActivateVisiblesTocMenuEntry extends AbstractTocContextMenuAction{
 		}
 
 	}
-	
+
 	public String getGroup() {
-		return "tocextra"; //FIXME
+		return "tocextra"; // FIXME
 	}
 
 	public int getGroupOrder() {
@@ -68,16 +82,26 @@ public class ActivateVisiblesTocMenuEntry extends AbstractTocContextMenuAction{
 		return 2;
 	}
 
+	/**
+	 * Method to enable or disable this menu entry.
+	 * 
+	 * @return true if the menu entry should be enabled, false otherwise.
+	 */
 	public boolean isEnabled(ITocItem item, FLayer[] selectedItems) {
 		return true;
 	}
 
+	/**
+	 * Method to this menu entry visibility.
+	 * 
+	 * @return true if the menu entry should be visible, false otherwise.
+	 */
 	public boolean isVisible(ITocItem item, FLayer[] selectedItems) {
-		if (isTocItemBranch(item) &&  selectedItems != null) {
+		if (isTocItemBranch(item) && selectedItems != null) {
 			return true;
 		}
 		return false;
 
 	}
-	
+
 }

@@ -14,7 +14,7 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package es.udc.cartolab.gvsig.tocextra;
 
@@ -29,18 +29,31 @@ import com.iver.cit.gvsig.project.documents.view.gui.View;
 import com.iver.cit.gvsig.project.documents.view.toc.ITocItem;
 import com.iver.cit.gvsig.project.documents.view.toc.actions.StartEditingTocMenuEntry;
 
+/**
+ * Class to change gvSIG Start Editing menu entry behavior. This class can be
+ * executed on several layers in one step. It is disabled due to performance.
+ * 
+ * @author Javier Estévez <valdaris at gmail dot com>
+ * 
+ */
 public class StartEdition2TocMenuEntry extends StartEditingTocMenuEntry {
 
-	@Override
+	/**
+	 * Method to this menu entry visibility
+	 * 
+	 * @return true if the menu entry should be visible, false otherwise.
+	 */
 	public boolean isVisible(ITocItem item, FLayer[] selectedItems) {
 
 		boolean visible = false;
 		if (isTocItemBranch(item)) {
-			IWindow window=PluginServices.getMDIManager().getActiveWindow();
-			if (window instanceof View){
+			IWindow window = PluginServices.getMDIManager().getActiveWindow();
+			if (window instanceof View) {
 				visible = true;
-				for (int i=0; i<selectedItems.length; i++) {
-					visible = visible && selectedItems[i].isAvailable() && selectedItems[i] instanceof FLyrVect && !((FLyrVect) selectedItems[i]).isEditing();
+				for (int i = 0; i < selectedItems.length; i++) {
+					visible = visible && selectedItems[i].isAvailable()
+							&& selectedItems[i] instanceof FLyrVect
+							&& !((FLyrVect) selectedItems[i]).isEditing();
 					if (!visible) {
 						break;
 					}
@@ -51,7 +64,14 @@ public class StartEdition2TocMenuEntry extends StartEditingTocMenuEntry {
 		return visible;
 	}
 
-	@Override
+	/**
+	 * Method that will be executed when user clicks on this TOC menu entry.
+	 * 
+	 * @param item
+	 *            TOC item clicked.
+	 * @param selectedItems
+	 *            Array of layers selected in TOC.
+	 */
 	public void execute(ITocItem item, FLayer[] selectedItems) {
 
 		CADExtension.initFocus();
@@ -59,14 +79,14 @@ public class StartEdition2TocMenuEntry extends StartEditingTocMenuEntry {
 
 		MapControl mapControl = view.getMapControl();
 
-		//mapControl.getMapContext().clearAllCachingImageDrawnLayers();
+		// mapControl.getMapContext().clearAllCachingImageDrawnLayers();
 		view.showConsole();
-		EditionManager editionManager=CADExtension.getEditionManager();
+		EditionManager editionManager = CADExtension.getEditionManager();
 		editionManager.setMapControl(mapControl);
 
 		ToggleEditing te = new ToggleEditing();
 
-		for (int i=0; i<selectedItems.length; i++) {
+		for (int i = 0; i < selectedItems.length; i++) {
 			if (selectedItems[i] instanceof FLyrVect) {
 				FLyrVect lv = (FLyrVect) selectedItems[i];
 				te.startEditing(lv);

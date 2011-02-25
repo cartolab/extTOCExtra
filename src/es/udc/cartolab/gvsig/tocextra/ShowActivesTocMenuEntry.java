@@ -14,32 +14,45 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package es.udc.cartolab.gvsig.tocextra;
 
 import com.iver.andami.PluginServices;
 import com.iver.cit.gvsig.fmap.layers.FLayer;
-import com.iver.cit.gvsig.project.documents.view.gui.View;
 import com.iver.cit.gvsig.project.documents.view.toc.AbstractTocContextMenuAction;
 import com.iver.cit.gvsig.project.documents.view.toc.ITocItem;
 
+/**
+ * TOC menu entry to show (set visible) all selected layers on view.
+ * 
+ * @author Javier Estévez <valdaris at gmail dot com>
+ * 
+ */
 public class ShowActivesTocMenuEntry extends AbstractTocContextMenuAction {
 
 	public String getText() {
 		return PluginServices.getText(this, "Show_actives");
 	}
-	
+
+	/**
+	 * Method that will be executed when user clicks on this TOC menu entry.
+	 * 
+	 * @param item
+	 *            TOC item clicked.
+	 * @param selectedItems
+	 *            Array of layers selected in TOC.
+	 */
 	public void execute(ITocItem item, FLayer[] selectedItems) {
-		
-		for (int i=0; i<selectedItems.length; i++) {
+
+		for (int i = 0; i < selectedItems.length; i++) {
 			selectedItems[i].setVisible(true);
 		}
-		
+
 	}
-	
+
 	public String getGroup() {
-		return "tocextra"; //FIXME
+		return "tocextra"; // FIXME
 	}
 
 	public int getGroupOrder() {
@@ -50,14 +63,25 @@ public class ShowActivesTocMenuEntry extends AbstractTocContextMenuAction {
 		return 10;
 	}
 
+	/**
+	 * Method to enable or disable this menu entry.
+	 * 
+	 * @return true if the menu entry should be enabled, false otherwise.
+	 */
 	public boolean isEnabled(ITocItem item, FLayer[] selectedItems) {
 		return true;
 	}
 
+	/**
+	 * Method to this menu entry visibility
+	 * 
+	 * @return true if the menu entry should be visible, false otherwise.
+	 */
 	public boolean isVisible(ITocItem item, FLayer[] selectedItems) {
-		
-		if (isTocItemBranch(item) && ! (selectedItems == null || selectedItems.length <= 0)) {
-			for (int i=0; i<selectedItems.length; i++) {
+
+		if (isTocItemBranch(item)
+				&& !(selectedItems == null || selectedItems.length <= 0)) {
+			for (int i = 0; i < selectedItems.length; i++) {
 				if (!selectedItems[i].isVisible()) {
 					return true;
 				}
@@ -66,5 +90,5 @@ public class ShowActivesTocMenuEntry extends AbstractTocContextMenuAction {
 		return false;
 
 	}
-	
+
 }

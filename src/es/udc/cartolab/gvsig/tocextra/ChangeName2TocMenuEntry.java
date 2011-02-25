@@ -14,7 +14,7 @@
  * 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package es.udc.cartolab.gvsig.tocextra;
 
@@ -22,14 +22,23 @@ import com.iver.cit.gvsig.fmap.layers.FLayer;
 import com.iver.cit.gvsig.project.documents.view.toc.ITocItem;
 import com.iver.cit.gvsig.project.documents.view.toc.actions.ChangeNameTocMenuEntry;
 
+/**
+ * Auxiliary class to change visibility of gvSIG default change layer name TOC
+ * menu entry. This makes it visible only when there's just one layer selected.
+ * 
+ * @author Javier Estévez <valdaris at gmail dot com>
+ * 
+ */
 public class ChangeName2TocMenuEntry extends ChangeNameTocMenuEntry {
-	
-	//No modifica el funcionamiento del cambio de nombre, solo se limita
-	//la aparicion de la opcion en el menu contextual a cuando hay una sola
-	//capa activa.
-	
+
+	/**
+	 * Method to set this menu entry visibility.
+	 * 
+	 * @return true if the menu entry should be visible, false otherwise.
+	 */
 	public boolean isVisible(ITocItem item, FLayer[] selectedItems) {
-		if (isTocItemBranch(item) && ! (selectedItems == null || selectedItems.length <= 0)) {
+		if (isTocItemBranch(item)
+				&& !(selectedItems == null || selectedItems.length <= 0)) {
 			return selectedItems.length == 1;
 		}
 		return false;
