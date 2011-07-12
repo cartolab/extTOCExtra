@@ -199,8 +199,7 @@ public class ChangeLayerNamesPanel extends JPanel implements IWindow,
 	}
 
 	public Object getWindowProfile() {
-		// TODO Auto-generated method stub
-		return null;
+		return WindowInfo.PROPERTIES_PROFILE;
 	}
 
 }
