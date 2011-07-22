@@ -1,40 +1,29 @@
 <project name="extTocExtra" default="generate-without-source" basedir=".">
-	<description>
-		Toc Extra options
-    </description>
-  <!-- set global properties for this build -->
+	<description> extTOCExtra ant build file </description>
 	<property name="src" location="src"/>
   	<property name="build" location="bin"/>
   	<property name="dist"  location="dist"/>
   	<property name="mainplugin" value="com.iver.cit.gvsig"/>
   	<property name="plugin" value="es.udc.cartolab.gvsig.tocextra"/>
-  	<property name="gvsiglibjar" value="es.udc.cartolab.gvsig.extra"/>
+  	<property name="gvsiglibjar" value="es.udc.cartolab.gvsig.tocextra"/>
   	<property name="andami" location="../_fwAndami" />
 	<property name="extensionsDir" location="../_fwAndami/gvSIG/extensiones"/>
 	<property name="lib-dir" location="${extensionsDir}/${mainplugin}/lib"/>
 
   	<target name="init">
-    	<!-- Create the time stamp -->
     	<tstamp/>
-    	<!-- Create the build directory structure used by compile -->
     	<mkdir dir="${build}"/>
-    	<mkdir dir="${dist}"/>
+    	<mkdir dir="${dist}/lib"/>
 	</target>
 
-  	<target name="generate-without-source"
-  		description="generate the distribution without the source file">
-    	<!-- Create the distribution directory -->
-    	<mkdir dir="${dist}" />
-  		<mkdir dir="${dist}/lib" />
+  	<target name="generate-without-source" description="generate the distribution without the source file" depends="init">
    	
  	 	<!-- <copy file="config/about.htm" todir="${dist}" overwrite="yes"/> -->
   	  	
-   		<!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
-  	
   		<jar jarfile="${dist}/lib/${plugin}.jar" basedir="${build}" includes="es/udc/cartolab/**" />
 
    		<copy file="config/config.xml" todir="${dist}"/>
-    		<copy todir="${dist}">
+    	<copy todir="${dist}">
     		<fileset dir="config" includes="text*.properties"/>
     	</copy>
     
@@ -43,37 +32,7 @@
     	</move>
   	</target>
 
-
-	<target name="compile" description="compile the source" >
-		<!-- Compile the Java code from ${src} to ${build} -->
-		<mkdir dir="${build}" />
-		<echo>${compile-classpath}</echo>
-		<javac srcdir="${src}"
-			destdir="${build}"
-			debug="${debug}"
-			debuglevel="${debuglevel}"
-			classpath="${compile-classpath}"/>
-	</target>
-
-	<target name="copy-data-files">
-		<copy file="config/config.xml" todir="${dist}"/>
-		<copy todir="${dist}">
-			<fileset dir="config" includes="text*.properties"/>
-		</copy>
-		<copy todir="${dist}">
-			<fileset dir="forms" includes="*" />
-		</copy>		
-	</target>
-
-	<target name="move-to-andami">
-	   <move todir="${extensionsDir}/${plugin}/">
-	    	<fileset dir="${dist}" includes="**/**"/>
-	    </move>
-	</target>
-
-	<target name="clean"
-	        description="clean up" >
-	    <!-- Delete the ${build} and ${dist} directory trees -->
+	<target name="clean" description="clean up" >
 		<delete dir="${dist}"/>
 		<delete dir="${build}"/>
 	</target>
