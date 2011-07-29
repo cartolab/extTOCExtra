@@ -1,6 +1,6 @@
 /*
  * This file is part of TOCExtra
- * Copyright (C) 2009 - 2011  Cartolab (Universidade da Coruña)
+ * Copyright (C) 2009 - 2011. Fundación de Ingeniería Civil de Galicia
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published
