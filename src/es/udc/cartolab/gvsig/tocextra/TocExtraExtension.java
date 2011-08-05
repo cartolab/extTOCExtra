@@ -56,6 +56,9 @@ public class TocExtraExtension extends Extension {
 				new ChangeNamesTocMenuEntry());
 		extensionPoints.add("View_TocActions", "ChangeName",
 				new ChangeName2TocMenuEntry());
+		
+		extensionPoints.add("View_TocActions", "OpenTable",
+				new OpenAttributeTableTocMenuEntry());
 
 		// Start and stop edition on several layers. It's too slow when there
 		// are many layers.
