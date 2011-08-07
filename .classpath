@@ -2,15 +2,13 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/appgvSIG"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/libFMap"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/_fwAndami"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/libIverUtiles"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/extCAD"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/libDriverManager"/>
-	<classpathentry kind="src" path="/libGDBMS"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/libProjection"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/libExceptions"/>
+	<classpathentry kind="src" path="/_fwAndami"/>
+	<classpathentry kind="src" path="/appgvSIG"/>
+	<classpathentry kind="lib" path="/_fwAndami/lib/iver-utiles.jar" sourcepath="/Utiles/src"/>
+	<classpathentry kind="src" path="/libFMap"/>
+	<classpathentry kind="lib" path="/libFMap/lib/org.cresques.cts.jar" sourcepath="/libProjection/src"/>
+	<classpathentry kind="lib" path="/libFMap/lib/gdbms-0.8-SNAPSHOT.jar" sourcepath="/libGDBMS"/>
+	<classpathentry kind="src" path="/extCAD"/>
 	<classpathentry kind="src" path="/extNavTable"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
