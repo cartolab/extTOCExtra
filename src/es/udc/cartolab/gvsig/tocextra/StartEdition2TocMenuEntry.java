@@ -29,6 +29,8 @@ import com.iver.cit.gvsig.project.documents.view.gui.View;
 import com.iver.cit.gvsig.project.documents.view.toc.ITocItem;
 import com.iver.cit.gvsig.project.documents.view.toc.actions.StartEditingTocMenuEntry;
 
+import es.udc.cartolab.gvsig.navtable.ToggleEditing;
+
 /**
  * Class to change gvSIG Start Editing menu entry behavior. This class can be
  * executed on several layers in one step. It is disabled due to performance.

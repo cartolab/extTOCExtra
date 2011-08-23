@@ -11,5 +11,6 @@
 	<classpathentry kind="src" path="/libGDBMS"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/libProjection"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/libExceptions"/>
+	<classpathentry kind="src" path="/extNavTable"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
