@@ -19,7 +19,7 @@
 package es.udc.cartolab.gvsig.tocextra;
 
 import com.iver.andami.plugins.Extension;
-import com.iver.cit.gvsig.project.documents.contextMenu.AbstractContextMenuAction;
+import com.iver.cit.gvsig.project.documents.IContextMenuAction;
 import com.iver.utiles.extensionPoints.ExtensionPoints;
 import com.iver.utiles.extensionPoints.ExtensionPointsSingleton;
 
@@ -37,7 +37,7 @@ public class TocExtraExtension extends Extension {
 
 	public void initialize() {
 
-	AbstractContextMenuAction[] entries = new AbstractContextMenuAction[] {
+	IContextMenuAction[] entries = new IContextMenuAction[] {
 		new ShowActivesTocMenuEntry(),
 		new ShowOnlyActivesTocMenuEntry(),
 		new ActivateVisiblesTocMenuEntry(),
@@ -47,7 +47,7 @@ public class TocExtraExtension extends Extension {
 
 	ExtensionPoints extensionPoints = ExtensionPointsSingleton
 		.getInstance();
-	for (AbstractContextMenuAction entry : entries) {
+	for (IContextMenuAction entry : entries) {
 	    extensionPoints.add("View_TocActions", entry.getClass().getName(),
 		    entry);
 	}
