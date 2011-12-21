@@ -47,6 +47,7 @@ import java.awt.FlowLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -62,11 +63,17 @@ import com.iver.andami.ui.mdiManager.IWindow;
 import com.iver.andami.ui.mdiManager.WindowInfo;
 import com.iver.cit.gvsig.fmap.layers.FLyrDefault;
 import com.iver.cit.gvsig.gui.GUIUtil;
+import com.iver.cit.gvsig.project.documents.view.gui.BaseView;
+
 /**
  * Panel de Ajuste de Transparencia.
+ * 
  * @author "Luis W. Sevilla" <sevilla_lui@gva.es>
+ * @author Francisco Puga <fpuga (at) cartolab.es> http://conocimientoabierto.es
  */
 public class AdjustTransparencyPanel extends JPanel implements IWindow  {
+
+    private static final long serialVersionUID = 2578240914886829770L;
 	JDialog dlg = null;
 	private JLabel jLabel = null;
 	private JSlider jSlider = null;
@@ -83,18 +90,27 @@ public class AdjustTransparencyPanel extends JPanel implements IWindow  {
 
     private ComandosListener m_actionListener;
     private int oldAlpha = 0;
+    private ArrayList<FLyrDefault> layers;
+    private BaseView view;
+    
+    public AdjustTransparencyPanel(ArrayList<FLyrDefault> layers, BaseView view) {
+	super();
+	initialize();
+	this.view = view;
+	this.layers = layers;
+    }
 	public AdjustTransparencyPanel(FLyrDefault layer) {
 		super();
-		initialize(layer);
+		setFLayer(layer);
+		oldAlpha = layer.getTransparency();
+		initialize();
 	}
-	private void initialize(FLyrDefault layer) {
+	private void initialize() {
 		percentLabel = new JLabel();
 		jLabel = new JLabel();
 		setBounds(0,0,255,133);
         setLayout(null);
 
-        setFLayer(layer);
-        oldAlpha = layer.getTransparency();
         jLabel.setBounds(15, 17, 195, 21);
         jLabel.setText("Nivel de transparencia:");
         jLabel.setText(PluginServices.getText(this, "Nivel_de_transparencia")+":");
@@ -121,11 +137,7 @@ public class AdjustTransparencyPanel extends JPanel implements IWindow  {
 		return getJSlider().getValue()*255/100;
 	}
 
-	/**
-	 * This method initializes jSlider
-	 *
-	 * @return javax.swing.JSlider
-	 */
+
 	private JSlider getJSlider() {
 		if (jSlider == null) {
 			jSlider = new JSlider();
@@ -135,16 +147,11 @@ public class AdjustTransparencyPanel extends JPanel implements IWindow  {
 		}
 		return jSlider;
 	}
-	/**
-	 * This method initializes jTextField
-	 *
-	 * @return javax.swing.JTextField
-	 */
+
 	private JTextField getJTxtTransparency() {
 		if (jTxtTransparency == null) {
 			jTxtTransparency = GUIUtil.createSyncdTextField(jSlider, 3);
 			jTxtTransparency.setBounds(190, 55, 30, 21);
-			//jTxtTransparency.setText("" + getAlpha());
 		}
 		return jTxtTransparency;
 	}
@@ -159,7 +166,6 @@ public class AdjustTransparencyPanel extends JPanel implements IWindow  {
 			flowLayout2.setHgap(5);
 			flowLayout2.setAlignment(java.awt.FlowLayout.RIGHT);
 			flowLayout2.setVgap(1);
-			//buttonsPanel.setPreferredSize(new java.awt.Dimension(225,25));
 			buttonsPanel.setName("buttonPanel");
 
 	        buttonsPanel.add(getBtnOk(), null);
@@ -202,35 +208,40 @@ public class AdjustTransparencyPanel extends JPanel implements IWindow  {
     private class ComandosListener implements ActionListener {
         private AdjustTransparencyPanel m_tp;
 
-        /**
-         * Creates a new ComandosListener object.
-         *
-         * @param lg DOCUMENT ME!
-         */
+
         public ComandosListener(AdjustTransparencyPanel tp) {
             m_tp = tp;
         }
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-		 */
-		public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) {
             if (e.getActionCommand() == "OK") {
-        		fLayer.setTransparency(getAlpha());
-				AdjustTransparencyPanel.this.closeJDialog();
+		applyTransparency();
+		view.getMapControl().drawMap(false);
+		AdjustTransparencyPanel.this.closeJDialog();
             } else if (e.getActionCommand() == "APPLY") {
-        		fLayer.setTransparency(getAlpha());
+		applyTransparency();
+		view.getMapControl().drawMap(false);
             } else if (e.getActionCommand() == "CANCEL") {
+		if (fLayer != null) {
             	if (oldAlpha != fLayer.getTransparency())
             		fLayer.setTransparency(oldAlpha);
-				AdjustTransparencyPanel.this.closeJDialog();
-            }
+		    AdjustTransparencyPanel.this.closeJDialog();
 		}
+	    }
+	}
+
+	private void applyTransparency() {
+	    if (fLayer != null) {
+		fLayer.setTransparency(getAlpha());
+	    } else {
+		for (FLyrDefault l : layers) {
+		    l.setTransparency(getAlpha());
+		}
+	    }
+	}
     }
 
-	/* (non-Javadoc)
-	 * @see com.iver.mdiApp.ui.MDIManager.View#getViewInfo()
-	 */
+
 	public WindowInfo getWindowInfo() {
 		if (m_ViewInfo==null){
 			m_ViewInfo=new WindowInfo(WindowInfo.MODALDIALOG);
@@ -238,13 +249,11 @@ public class AdjustTransparencyPanel extends JPanel implements IWindow  {
 		}
 		return m_ViewInfo;
 	}
-	/* (non-Javadoc)
-	 * @see com.iver.mdiApp.ui.MDIManager.View#viewActivated()
-	 */
+
 	public void viewActivated() {
-		// TODO Auto-generated method stub
 
 	}
+
 	public void openJDialog() {
 		if (PluginServices.getMainFrame() == null) {
 			dlg = new JDialog();
@@ -274,4 +283,4 @@ public class AdjustTransparencyPanel extends JPanel implements IWindow  {
 		return WindowInfo.DIALOG_PROFILE;
 	}
 
-   }  //  @jve:visual-info  decl-index=0 visual-constraint="10,10"
+}

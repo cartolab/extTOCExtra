@@ -43,7 +43,8 @@ public class TocExtraExtension extends Extension {
 		new ActivateVisiblesTocMenuEntry(),
 		new InvertSelectionTocMenuEntry(), new ShowAllTocMenuEntry(),
 		new HideAllTocMenuEntry(), new ChangeNamesTocMenuEntry(),
-		new OpenAttributeTableTocMenuEntry() };
+		new OpenAttributeTableTocMenuEntry(),
+		new SetTransparencyTocMenuEntry() };
 
 	ExtensionPoints extensionPoints = ExtensionPointsSingleton
 		.getInstance();

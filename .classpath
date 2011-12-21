@@ -10,5 +10,8 @@
 	<classpathentry kind="lib" path="/libFMap/lib/gdbms-0.8-SNAPSHOT.jar" sourcepath="/libGDBMS"/>
 	<classpathentry kind="src" path="/extCAD"/>
 	<classpathentry kind="src" path="/extNavTable"/>
+	<classpathentry kind="src" path="/libUIComponent"/>
+	<classpathentry kind="src" path="/extRasterTools-SE"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/libRaster"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
