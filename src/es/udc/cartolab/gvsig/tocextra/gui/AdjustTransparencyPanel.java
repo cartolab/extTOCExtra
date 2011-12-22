@@ -67,7 +67,7 @@ import com.iver.cit.gvsig.project.documents.view.gui.BaseView;
 
 /**
  * Panel de Ajuste de Transparencia.
- * 
+ *
  * @author "Luis W. Sevilla" <sevilla_lui@gva.es>
  * @author Francisco Puga <fpuga (at) cartolab.es> http://conocimientoabierto.es
  */
@@ -92,7 +92,7 @@ public class AdjustTransparencyPanel extends JPanel implements IWindow  {
     private int oldAlpha = 0;
     private ArrayList<FLyrDefault> layers;
     private BaseView view;
-    
+
     public AdjustTransparencyPanel(ArrayList<FLyrDefault> layers, BaseView view) {
 	super();
 	initialize();
@@ -223,10 +223,11 @@ public class AdjustTransparencyPanel extends JPanel implements IWindow  {
 		view.getMapControl().drawMap(false);
             } else if (e.getActionCommand() == "CANCEL") {
 		if (fLayer != null) {
-            	if (oldAlpha != fLayer.getTransparency())
-            		fLayer.setTransparency(oldAlpha);
-		    AdjustTransparencyPanel.this.closeJDialog();
+		    if (oldAlpha != fLayer.getTransparency()) {
+			fLayer.setTransparency(oldAlpha);
+		    }
 		}
+		AdjustTransparencyPanel.this.closeJDialog();
 	    }
 	}
 
@@ -266,16 +267,18 @@ public class AdjustTransparencyPanel extends JPanel implements IWindow  {
 			dlg.setModal(true);
 			dlg.pack();
 			dlg.setVisible(true);
-		} else
-			PluginServices.getMDIManager().addWindow(this);
+		} else {
+		    PluginServices.getMDIManager().addWindow(this);
+		}
 	}
 	public void closeJDialog() {
 		if (PluginServices.getMainFrame() == null) {
 			dlg.setVisible(false);
 			dlg.dispose();
 			dlg = null;
-		} else
-			PluginServices.getMDIManager().closeWindow(this);
+		} else {
+		    PluginServices.getMDIManager().closeWindow(this);
+		}
 
 
 	}
