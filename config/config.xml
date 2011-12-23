@@ -2,10 +2,11 @@
 <plugin-config>
 	<depends plugin-name="com.iver.cit.gvsig"/>
 	<depends plugin-name="com.iver.cit.gvsig.cad" />
+	<depends plugin-name="org.gvsig.rastertools" />
 	<libraries library-dir="lib"/>
 	<resourceBundle name="text"/>
 	<extensions>
-		<extension class-name="es.udc.cartolab.gvsig.tocextra.TocExtraExtension" description="NavTable" active="true">
+		<extension class-name="es.udc.cartolab.gvsig.tocextra.TocExtraExtension" description="" active="true">
 		</extension> 
 	</extensions>
 </plugin-config>

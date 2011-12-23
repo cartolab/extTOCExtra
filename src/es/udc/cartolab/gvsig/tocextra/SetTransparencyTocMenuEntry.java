@@ -68,16 +68,18 @@ public class SetTransparencyTocMenuEntry extends AbstractTocContextMenuAction {
 	}
     }
 
+
+
     public String getGroup() {
-	return "tocextra"; // FIXME
+	return "RasterLayer";
     }
 
     public int getGroupOrder() {
-	return 50;
+	return 60;
     }
 
     public int getOrder() {
-	return 14;
+	return 100;
     }
 
     public boolean isEnabled(ITocItem item, FLayer[] selectedItems) {

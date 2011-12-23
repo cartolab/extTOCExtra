@@ -18,7 +18,6 @@
 
   	<target name="generate-without-source" description="generate the distribution without the source file" depends="init">
    	
- 	 	<!-- <copy file="config/about.htm" todir="${dist}" overwrite="yes"/> -->
   	  	
   		<jar jarfile="${dist}/lib/${plugin}.jar" basedir="${build}" includes="es/udc/cartolab/**" />
 
@@ -26,6 +25,18 @@
     	<copy todir="${dist}">
     		<fileset dir="config" includes="text*.properties"/>
     	</copy>
+  		
+  		<copy todir="${dist}/about"  overwrite="true">
+  			<fileset dir="about/" includes="*"/>
+  		</copy>
+  		
+  		<copy file="build.number" todir="${dist}"/>
+  		
+  		<loadproperties srcFile="build.number"/>
+  		<replace casesensitive="true"
+  			file="${dist}/about/about.htm"
+  			token="#build.number#"
+  			value="${build.number}"/>
     
   		<move todir="${extensionsDir}/${plugin}/">
     		<fileset dir="${dist}" includes="**/**"/>
@@ -35,5 +46,12 @@
 	<target name="clean" description="clean up" >
 		<delete dir="${dist}"/>
 		<delete dir="${build}"/>
+	</target>
+	
+	<target name="buildNumber">  
+		<propertyfile file="build.number" comment="Build Number for ANT. Do not edit!">
+			<entry key="build.number" default="0" type="int" operation="+" />
+		</propertyfile>
+		<property file="build.number" />
 	</target>
 </project>
