@@ -112,8 +112,7 @@ public class AdjustTransparencyPanel extends JPanel implements IWindow  {
         setLayout(null);
 
         jLabel.setBounds(15, 17, 195, 21);
-        jLabel.setText("Nivel de transparencia:");
-        jLabel.setText(PluginServices.getText(this, "Nivel_de_transparencia")+":");
+	jLabel.setText(PluginServices.getText(this, "opacidad") + ":");
         percentLabel.setBounds(225, 55, 21, 20);
         percentLabel.setText("%");
         this.add(jLabel, null);
