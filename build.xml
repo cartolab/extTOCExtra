@@ -16,42 +16,58 @@
     	<mkdir dir="${dist}/lib"/>
 	</target>
 
-  	<target name="generate-without-source" description="generate the distribution without the source file" depends="init">
-   	
-  	  	
-  		<jar jarfile="${dist}/lib/${plugin}.jar" basedir="${build}" includes="es/udc/cartolab/**" />
+	<target name="compile" description="compile the source" >
+		<mkdir dir="${build}" />
+		<loadEclipseClasspath project="${basedir}"/>
+			<gvSIG-javac classpath="${eclipseClasspath}" />
+	</target>
 
-   		<copy file="config/config.xml" todir="${dist}"/>
-    	<copy todir="${dist}">
-    		<fileset dir="config" includes="text*.properties"/>
-    	</copy>
-  		
-  		<copy todir="${dist}/about"  overwrite="true">
+	<target name="create-jar"
+				description="Creates the plugin jar">
+		<jar jarfile="${dist}/lib/${plugin}.jar" basedir="${build}" includes="es/udc/cartolab/**" />
+		</target>
+
+	<target name="copy-data-files">
+	    <copy file="config/config.xml" todir="${dist}"/>
+		<copy todir="${dist}">
+			<fileset dir="config" includes="text*.properties"/>
+		</copy>
+
+ 		<copy todir="${dist}/about"  overwrite="true">
   			<fileset dir="about/" includes="*"/>
   		</copy>
-  		
-  		<copy file="build.number" todir="${dist}"/>
-  		
-  		<loadproperties srcFile="build.number"/>
-  		<replace casesensitive="true"
-  			file="${dist}/about/about.htm"
-  			token="#build.number#"
-  			value="${build.number}"/>
-    
-  		<move todir="${extensionsDir}/${plugin}/">
-    		<fileset dir="${dist}" includes="**/**"/>
-    	</move>
-  	</target>
+	</target>
+
+	<target name="move-to-andami">
+	   <move todir="${extensionsDir}/${plugin}/">
+	    	<fileset dir="${dist}" includes="**/**"/>
+	    </move>
+	</target>
+
+	  <target name="generate-without-source"
+	  		description="generate the distribution without the source file"
+	  	depends="init, create-jar, copy-data-files, move-to-andami" >
+	  </target>
+
+	<target name="batch-build" depends="init, compile, create-jar, copy-data-files, buildNumber, move-to-andami">
+	</target>
 
 	<target name="clean" description="clean up" >
 		<delete dir="${dist}"/>
 		<delete dir="${build}"/>
 	</target>
-	
-	<target name="buildNumber">  
+
+	<target name="buildNumber">
 		<propertyfile file="build.number" comment="Build Number for ANT. Do not edit!">
 			<entry key="build.number" default="0" type="int" operation="+" />
 		</propertyfile>
 		<property file="build.number" />
+  		<copy file="build.number" todir="${dist}"/>
+
+  		<loadproperties srcFile="build.number"/>
+  		<replace casesensitive="true"
+  			file="${dist}/about/about.htm"
+  			token="#build.number#"
+  			value="${build.number}"/>
 	</target>
 </project>
