@@ -11,7 +11,7 @@
 	<target name="generate-without-source" depends="init, create-jar, copy-data-files, move-to-andami" >
 	</target>
 
-	<target name="batch-build" depends="init, compile, create-jar, copy-data-files, buildNumber, move-to-andami">
+	<target name="batch-build" depends="init, compile, create-jar, copy-data-files, move-to-andami">
 	</target>
 
 	<target name="init">
